@@ -25,7 +25,6 @@ for i in b:
         if j != None and j != '\xa0':
             c[i]+=[j]
 
-print(c)
 d=[]
 y = soup.findAll('a',href = True,text='Roster')
 for link in y:
@@ -35,33 +34,34 @@ for i in c:
     c[i]+=[d[f]]
     f+=1
 print(c)
-
-
-
+y = {}
 for i in c:
-    if c[i][len(c[i])-2] not in b.keys():
-        b[c[i][len(c[i])-2]] = [[c[i][0],c[i][len(c[i])-1]]]
-    else:
-        b[c[i][len(c[i])-2]] += [[c[i][0],c[i][len(c[i])-1]]]
-print(b)
+    for j in c[i]:
+        y[c[i][0]] = []
 
-
-import ssl
-from urllib.request import urlopen
-from bs4 import BeautifulSoup
-context = ssl._create_unverified_context()
-y={}
-for i in x:
-    for j in x[i]:
-        y[j[0]] = []
-        
-        response = urlopen("https://basketball.realgm.com/{}".format(j[1]),context=context)
+        response = urlopen("https://basketball.realgm.com/{}".format(c[i][len(c[i])-1]), context=context)
+        print
         response = response.read().decode()
         soup = BeautifulSoup(response, 'lxml')
         for row in soup.findAll('table')[0].tbody.findAll('tr'):
             second_column = row.findAll('td')[1].contents
             for W in second_column:
-                y[j[0]] += [{W.string}
-                            ]
+                y[c[i][0]] += [W.string]
 
-    print(y)
+print(y)
+
+
+
+
+t={}
+for i in c:
+    if c[i][len(c[i])-2] not in t.keys():
+        t[c[i][len(c[i])-2]] = [c[i][0]]
+    else:
+        t[c[i][len(c[i])-2]] += [c[i][0]]
+print(t)
+q={}
+for i in c:
+    q[c[i][0]] = c[i][len(c[i])-2]
+
+print(q)
