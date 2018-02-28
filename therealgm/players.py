@@ -9,7 +9,7 @@ for i in range(1,60):
     context = ssl._create_unverified_context()
     response = urlopen("https://basketball.realgm.com/international/stats/2018/Averages/Qualified/All/points/All/desc/"+str(i), context=context)
     response = response.read().decode()
-    soup = BeautifulSoup(response, 'lxml')
+    soup = BeautifulSoup(response, 'html.parser')
     for row in soup.findAll('table')[0].tbody.findAll('tr'):
         for j in range(len(row)):
             if j == 1:
@@ -18,7 +18,9 @@ for i in range(1,60):
                 x[v]= {}
             if j >=3:
                 x[v].update({y[j-3]:list(row)[j].string})
-    z = open('playersdata.py','w+')
-    z.write('a ='+str(x))
-    z.close
-    break
+z = open('data/playersdata.py','w+')
+z.write('players ='+str(x))
+z.close()
+
+
+
