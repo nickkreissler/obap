@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 context = ssl._create_unverified_context()
 response = urlopen("https://basketball.realgm.com/international/teams",context=context)
 response = response.read().decode()
-soup = BeautifulSoup(response, 'lxml')
+soup = BeautifulSoup(response, 'html.parser')
 x = soup.findAll('td')
 a=0
 c=0
@@ -51,10 +51,10 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 context = ssl._create_unverified_context()
 y={}
-for i in x:
-    for j in x[i]:
+for i in c:
+    for j in c[i]:
         y[j[0]] = []
-        
+        print(j[1])
         response = urlopen("https://basketball.realgm.com/{}".format(j[1]),context=context)
         response = response.read().decode()
         soup = BeautifulSoup(response, 'lxml')
